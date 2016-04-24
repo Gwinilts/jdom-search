@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 public class TestJode extends AbstractJode implements Serializable, Jode {
     
+    public static final long serialVersionUID = 1L;
+    
     boolean hasId = false;
     
     public TestJode() {

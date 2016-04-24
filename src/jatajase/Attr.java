@@ -5,11 +5,16 @@
  */
 package jatajase;
 
+import java.io.Serializable;
+
 /**
  *
  * @author gwion
  */
-public class Attr<T> {
+public class Attr<T> implements Serializable {
+    
+    public static final long serialVersionUID = 1L;
+    
     private T value;
     
     public Attr(T v) {

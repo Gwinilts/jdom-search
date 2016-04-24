@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jatajase;
-
-import java.io.Serializable;
+package server;
+import jatajase.Jocument;
+import jatajase.JodeName;
 
 /**
  *
  * @author gwion
  */
-public class JNode extends AbstractJode implements Serializable {
-    public static final long serialVersionUID = 1L;
+public class Main {
     
-    public JNode(JodeName name) {
-        name(name);
+    public static void main(String[] args) {
+        
     }
-   
-    
     
 }

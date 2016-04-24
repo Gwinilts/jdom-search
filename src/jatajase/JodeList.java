@@ -12,6 +12,8 @@ import java.util.LinkedList;
  * @author gwion
  */
 public class JodeList extends LinkedList<AbstractJode> implements Serializable {
+    public static final long serialVersionUID = 1L;
+    
     private boolean strict;
     private boolean assignor;
     
@@ -105,6 +107,34 @@ public class JodeList extends LinkedList<AbstractJode> implements Serializable {
             }
         }
         return matches;
+    }
+    
+    public String toString() {
+        String output = "\n{[ JodeList : [";
+        
+        for (AbstractJode j: this) {
+            output += j.toString();
+        }
+        
+        output += "]}";
+        
+        return output;
+    }
+    
+    public String toString(int tab) {
+        String tb = "";
+        for (int i = 0; i < tab; i++) {
+            tb += "\t";
+        }
+        String output = "\n" + tb + "{[ JodeList : [";
+        
+        for (AbstractJode j: this) {
+            output += j.toString(tab + 1);
+        }
+        
+        output += "\n" + tb + "]}";
+        
+        return output;
     }
     
 }

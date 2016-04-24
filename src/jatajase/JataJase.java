@@ -5,56 +5,61 @@
  */
 package jatajase;
 
+import java.util.LinkedList;
+import java.util.TreeMap;
+
 /**
  *
  * @author gwion
  */
-public class JataJase {
+public class JataJase extends Thread {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        JNode target = new JNode(JodeName.JRow);
-        TestJode search = new TestJode();
-        
-        search.attr("something", ":like::%:");
-        target.attr("something", "happy go");
-        
-        System.out.println(search.matches(target));
-        
-        
-        
-        
-        Jocument db = new Jocument();
-        db.addTable("Customers", true);
-        JNode customer = new JNode(JodeName.JRow);
-        System.out.println(customer.attr("name", "Gwion Smith"));
-        customer.attr("telephone", "0871234253");
-        customer.attr("hometown", "Hazelwood Ave");
-        db.add("Customers", customer);
-        customer = new JNode(JodeName.JRow);
-        customer.attr("name", "Foxy Megan");
-        customer.attr("telephone", "0429346574");
-        customer.attr("hometown", "Hazelwood Ave");
-        db.add("Customers", customer);
-        customer = new JNode(JodeName.JRow);
-        customer.attr("name", "Philly Fingers");
-        customer.attr("hometown", "Not HazelWood Ave At All");
-        db.add("Customers", customer);
-        
-        TestJode matcher = new TestJode();
-        matcher.attr("name", "billy");
-        
-        AbstractJode customers = db.getTable("Customers");
-        
-        JodeList searchTest = db.search("Customers", matcher);
-        
-        for (AbstractJode j: searchTest) {
-            System.out.println(j.toString());
+    private volatile LinkedList<Thread> operations;
+    private volatile boolean finished;
+    private volatile Thread user;
+    private volatile TreeMap<String, Jocument> db;
+    
+    public synchronized boolean canUse(Thread t) {
+        return t == user;
+    }
+    
+    public synchronized void done(Thread t) throws WaitYourTurnException {
+        if (t == user) {
+            finished = true;
+        } else {
+            throw new WaitYourTurnException("You're not using this thread!");
         }
-        
+    }
+    
+    public synchronized void requestAccess(Thread t) throws WaitYourTurnException {
+        if (operations.contains(t)) {
+            throw new WaitYourTurnException("You're already pending an op, you should be sleeping!");
+        } else {
+            operations.addLast(t);
+        }
+    }
+    
+    
+    
+    public synchronized boolean isWaiting(Thread t) {
+        return operations.contains(t);
+    }
+    
+    public JataJase() {
+        operations = new LinkedList();
+        finished = true;
+        db = new TreeMap();
+    }
+    
+    public void run() {
+        Thread ac;
+        while (true) {
+            if (finished && !operations.isEmpty()) {
+                ac = operations.removeFirst();
+                user = ac;
+                finished = false;
+            }
+        }
     }
     
 }

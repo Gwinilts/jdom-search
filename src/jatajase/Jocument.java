@@ -16,6 +16,8 @@ import java.io.Serializable;
  */
 public class Jocument extends AbstractJode implements Serializable {
     
+    public static final long serialVersionUID = 1L;
+    
     // The root element is the database
     private AbstractJode rootElement;
     
@@ -26,6 +28,8 @@ public class Jocument extends AbstractJode implements Serializable {
     public Jocument() {
         rootElement = new JNode(JodeName.JRoot);
         rootElement.parent(this);
+        name(JodeName.JRoot);
+        id(0);
     }
     
     /**
@@ -119,6 +123,18 @@ public class Jocument extends AbstractJode implements Serializable {
         System.out.println("An element is added to " + tableName);
         AbstractJode table = getTable(tableName); 
         System.out.println(table.appendChild(newElement));
+    }
+    
+    public String toString() {
+        return this.rootElement.toString(0);
+    }
+    
+    public String stringify() {
+        return this.rootElement.stringify();
+    }
+    
+    public void parse(String data) {
+        this.rootElement.parse(data);
     }
     
     

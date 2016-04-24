@@ -5,13 +5,14 @@
  */
 package jatajase;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author gwion
  */
-public class AttrList extends HashMap<String, Attr> {
+public class AttrList extends HashMap<String, Attr> implements Serializable {
     public <T> boolean setAttribute(String name, T value) {
         return (this.put(name, new Attr(value)) != null);
         

@@ -5,11 +5,13 @@
  */
 package jatajase;
 
+import java.io.Serializable;
+
 /**
  *
  * @author gwion
  */
-public interface Jode {
+public interface Jode extends Serializable {
     
     public <T> T attr(String n, Class<T> c);
     public <T> boolean attr(String n, T t);
