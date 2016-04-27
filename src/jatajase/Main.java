@@ -5,21 +5,16 @@
  */
 package jatajase;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author gwion
  */
 public class Main {
     public static void main(String[] args) {
+        System.out.println("gWion".matches("[gG][wW][iI][oO][nN]"));
+        
+        
+        
         Jocument a = new Jocument();
         a.addTable("Friends");
         

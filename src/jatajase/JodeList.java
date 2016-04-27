@@ -39,12 +39,14 @@ public class JodeList extends LinkedList<AbstractJode> implements Serializable {
     }
     
     public void merge(JodeList e) {
-        for (AbstractJode j: this) {
+        this.stream().map((j) -> {
             if (assignor) {
                 j.id(giveId());
             }
+            return j;
+        }).forEach((j) -> {
             this.add(j);
-        }
+        });
     }
     
     public JodeList allMatches(TestJode item, boolean deep) {
